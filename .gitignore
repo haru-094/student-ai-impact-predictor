@@ -1,44 +1,93 @@
+# ════════════════════════════════════════════
+# .gitignore — student-ai-impact-predictor
+# ════════════════════════════════════════════
+
 # ── Python ───────────────────────────────────
 __pycache__/
 *.py[oc]
 *.pyo
+*.pyd
 build/
 dist/
 wheels/
-*.egg-info
+*.egg-info/
 .eggs/
+*.so
 
 # ── Virtual environments ─────────────────────
 .venv/
 venv/
 env/
+ENV/
+
+# ── uv ───────────────────────────────────────
+uv.lock
+.python-version
 
 # ── Jupyter ──────────────────────────────────
 .ipynb_checkpoints/
-*.ipynb_checkpoints
+**/.ipynb_checkpoints/
 
-# ── Data — keep raw small files, ignore large processed ──
+# ── Data (large files — not for GitHub) ──────
+Data/raw/*.csv
+Data/raw/*.xlsx
+Data/raw/*.json
 Data/processed/*.parquet
-Data/raw/*.csv          # large dataset — tracked via DVC or shared separately
+Data/processed/*.csv
+Data/processed/*.feather
+# keep directory markers
 !Data/raw/.gitkeep
 !Data/processed/.gitkeep
 
-# ── Model artifacts ──────────────────────────
+# ── Trained model artifacts ───────────────────
 models/saved/**/*.pkl
 models/saved/**/*.joblib
+models/saved/**/*.h5
+models/saved/**/*.pt
+models/saved/**/*.onnx
 !models/saved/.gitkeep
 
-# ── Reports / figures — optional (uncomment to exclude) ──
-# reports/figures/*.png
+# ── Generated figures & reports ───────────────
+reports/figures/*.png
+reports/figures/*.jpg
+reports/figures/*.svg
+reports/figures/*.pdf
+!reports/figures/.gitkeep
 
-# ── uv / pip ─────────────────────────────────
-uv.lock                 # commit this if you want reproducible installs
-.python-version
+# ── Logs ─────────────────────────────────────
+*.log
+logs/
+mlruns/               # MLflow tracking
+.mlflow/
 
-# ── OS / IDE ─────────────────────────────────
+# ── Environment / secrets ────────────────────
+.env
+.env.*
+*.secret
+secrets.yaml
+
+# ── OS files ─────────────────────────────────
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ── IDE / editor ─────────────────────────────
 .idea/
 .vscode/
 *.swp
 *.swo
+*~
+.project
+.pydevproject
+.spyderproject
+.spyproject
+
+# ── Temporary / misc ─────────────────────────
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig
