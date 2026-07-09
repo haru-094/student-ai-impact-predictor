@@ -1,0 +1,95 @@
+# ─────────────────────────────────────────────
+# Project-wide configuration
+# ─────────────────────────────────────────────
+
+project:
+  name: impact-of-ai-on-students
+  version: "1.0.0"
+  random_seed: 42
+
+# ── Paths ────────────────────────────────────
+paths:
+  raw_data: "Data/raw/ai_student_impact_dataset (1).csv"
+  processed_data: "Data/processed/"
+  models: "models/saved/"
+  reports: "reports/"
+  figures: "reports/figures/"
+
+# ── Data ─────────────────────────────────────
+data:
+  target_regression: "Post_Semester_GPA"
+  target_classification: "Burnout_Risk_Level"
+  drop_columns:
+    - "Student_ID"
+  test_size: 0.2
+  val_size: 0.1
+
+# ── Engineered Features ──────────────────────
+engineered_features:
+  - study_ratio               # Traditional / (GenAI + 1)
+  - total_study_hours         # Traditional + GenAI
+  - genai_dependency_score    # GenAI * Perceived_AI_Dependency
+  - ai_efficiency             # Skill_Retention / (GenAI + 1)
+  - anxiety_gpa_pressure      # Anxiety * (4 - Pre_GPA)
+
+# ── Ordinal Mappings ─────────────────────────
+ordinal_mappings:
+  Year_of_Study:
+    Freshman: 1
+    Sophomore: 2
+    Junior: 3
+    Senior: 4
+    Graduate: 5
+  Prompt_Engineering_Skill:
+    Beginner: 1
+    Intermediate: 2
+    Advanced: 3
+  Primary_Use_Case_GPA_rank:       # ordered by avg GPA from EDA
+    Direct_Answer_Generation: 1
+    Copywriting/Drafting: 2
+    Ideation: 3
+    Summarizing_Reading: 4
+    Debugging/Troubleshooting: 5
+
+# ── Feature Groups (after engineering) ───────
+features:
+  numerical:
+    - Pre_Semester_GPA
+    - Weekly_GenAI_Hours
+    - Tool_Diversity
+    - Traditional_Study_Hours
+    - Perceived_AI_Dependency
+    - Anxiety_Level_During_Exams
+    - Skill_Retention_Score
+    - study_ratio
+    - total_study_hours
+    - genai_dependency_score
+    - ai_efficiency
+    - anxiety_gpa_pressure
+  ordinal:
+    - Year_of_Study_enc
+    - Prompt_Engineering_Skill_enc
+    - Primary_Use_Case_enc
+  categorical:
+    - Major_Category
+    - Institutional_Policy
+  binary:
+    - Paid_Subscription
+
+# ── Models ───────────────────────────────────
+models:
+  regression:
+    - linear_regression
+    - random_forest_regressor
+    - gradient_boosting_regressor
+  classification:
+    - logistic_regression
+    - random_forest_classifier
+    - gradient_boosting_classifier
+
+# ── Hyperparameter Tuning ────────────────────
+tuning:
+  method: "grid_search"   # grid_search | random_search
+  cv_folds: 5
+  scoring_regression: "neg_root_mean_squared_error"
+  scoring_classification: "f1_weighted"
