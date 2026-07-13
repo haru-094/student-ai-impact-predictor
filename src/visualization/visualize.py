@@ -20,10 +20,14 @@ def save_fig(fig, name: str, cfg: dict) -> None:
 
 def plot_target_distribution(series: pd.Series, cfg: dict) -> None:
     fig, ax = plt.subplots(figsize=(8, 4))
-    series.value_counts().plot(kind="bar", ax=ax, color="steelblue", edgecolor="white")
+    if pd.api.types.is_numeric_dtype(series) and series.nunique() > 15:
+        sns.histplot(series, kde=True, ax=ax, color="steelblue", edgecolor="white")
+        ax.set_ylabel("Density")
+    else:
+        series.value_counts().sort_index().plot(kind="bar", ax=ax, color="steelblue", edgecolor="white")
+        ax.set_ylabel("Count")
     ax.set_title(f"Distribution of {series.name}")
     ax.set_xlabel(series.name)
-    ax.set_ylabel("Count")
     save_fig(fig, f"distribution_{series.name}.png", cfg)
 
 

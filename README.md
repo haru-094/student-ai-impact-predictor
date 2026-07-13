@@ -92,7 +92,31 @@ uv run jupyter nbconvert --to notebook --execute notebooks/02_feature_engineerin
 
 ## 📈 Results
 
-*(Populated after running `03_modeling.ipynb`)*
+The final models were trained on 40,000 students and evaluated on a holdout test set of 10,000 students.
+
+### Task A: Regression (`Post_Semester_GPA`)
+
+| Model | Test MAE | Test RMSE | Test R² |
+| :--- | :---: | :---: | :---: |
+| **Gradient Boosting (Tuned)** | **0.1125** | **0.1426** | **0.9157** |
+| Random Forest (Tuned) | 0.1184 | 0.1516 | 0.9048 |
+| Linear Regression | 0.1247 | 0.1586 | 0.8958 |
+
+*   **Best Model:** Gradient Boosting Regressor, explaining **91.57%** of the variance in final GPA.
+*   **Key Insight:** Pre-Semester GPA and the engineered interaction feature `anxiety_gpa_pressure` are the strongest drivers of student performance.
+
+### Task B: Classification (`Burnout_Risk_Level`)
+
+| Model | Test Accuracy | Test Weighted F1 |
+| :--- | :---: | :---: |
+| **Logistic Regression (Tuned)** | **53.86%** | **53.86%** |
+| Gradient Boosting (Tuned) | 53.62% | 53.66% |
+| Random Forest (Tuned) | 53.38% | 53.36% |
+
+*   **Best Model:** Logistic Regression (lightweight and interpretable) and Gradient Boosting achieve comparable results, ~53.9% F1-score.
+*   **Key Insight:** Initially a weak-signal problem (Mutual Information < 0.004), feature engineering (specifically `study_ratio` and `genai_dependency_score`) was critical, lifting classification weighted F1-score from a near-dummy baseline of **~25%** to **~54%**.
+
+For detailed visualization outputs, diagnostic curves (Residuals, Confusion Matrices, ROC Curves), and key findings, please refer to the fully executed evaluation notebook: [04_evaluation.ipynb](file:///home/haru/Data_Science/Project/student-ai-impact-predictor/notebooks/04_evaluation.ipynb).
 
 ## 📄 License
 

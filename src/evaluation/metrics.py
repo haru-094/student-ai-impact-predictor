@@ -1,5 +1,6 @@
 """Compute and display model evaluation metrics."""
 
+from typing import List, Dict
 import pandas as pd
 from sklearn.metrics import (
     mean_absolute_error, mean_squared_error, r2_score,
@@ -29,6 +30,6 @@ def evaluate_classification(y_true, y_pred, model_name: str = "") -> dict:
     return result
 
 
-def compare_models(results: list[dict]) -> pd.DataFrame:
+def compare_models(results: List[Dict]) -> pd.DataFrame:
     """Return a sorted DataFrame from a list of metric dicts."""
     return pd.DataFrame(results)
