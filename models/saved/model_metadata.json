@@ -1,0 +1,48 @@
+{
+  "best_regression_model": "Gradient Boosting",
+  "best_regression_metrics": {
+    "Model": "Gradient Boosting",
+    "CV R\u00b2": 0.9145,
+    "CV RMSE": 0.1452,
+    "CV MAE": 0.1139,
+    "Test R\u00b2": 0.9156,
+    "Test RMSE": 0.1428,
+    "Test MAE": 0.1124,
+    "Time (s)": 415.6
+  },
+  "best_classification_model": "Gradient Boosting",
+  "best_classification_metrics": {
+    "Model": "Gradient Boosting",
+    "CV F1": 0.2946,
+    "CV Accuracy": 0.4117,
+    "Test F1": 0.2848,
+    "Test Accuracy": 0.414,
+    "Time (s)": 900.8
+  },
+  "feature_columns": [
+    "Pre_Semester_GPA",
+    "Weekly_GenAI_Hours",
+    "Tool_Diversity",
+    "Paid_Subscription",
+    "Traditional_Study_Hours",
+    "Perceived_AI_Dependency",
+    "Anxiety_Level_During_Exams",
+    "Skill_Retention_Score",
+    "study_ratio",
+    "total_study_hours",
+    "genai_dependency_score",
+    "ai_efficiency",
+    "anxiety_gpa_pressure",
+    "Year_of_Study_enc",
+    "Prompt_Engineering_Skill_enc",
+    "Primary_Use_Case_enc",
+    "Major_Category_Arts",
+    "Major_Category_Business",
+    "Major_Category_Humanities",
+    "Major_Category_Medical",
+    "Major_Category_STEM",
+    "Institutional_Policy_Actively_Encouraged",
+    "Institutional_Policy_Allowed_With_Citation",
+    "Institutional_Policy_Strict_Ban"
+  ]
+}
