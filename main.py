@@ -8,7 +8,8 @@ Usage:
 """
 
 import argparse
-from src.utils.helpers import load_config, get_logger, ensure_dirs
+import joblib
+from src.utils.helpers import load_config, get_logger, ensure_dirs, ROOT
 from src.data.ingest import load_raw
 from src.data.preprocess import clean, split
 from src.features.build_features import engineer_features
