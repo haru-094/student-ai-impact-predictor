@@ -17,7 +17,7 @@ paths:
 
 # ── Data ─────────────────────────────────────
 data:
-  target_regression: "Post_Semester_GPA"
+  target_regression: "gpa_change"
   target_classification: "Burnout_Risk_Level"
   drop_columns:
     - "Student_ID"

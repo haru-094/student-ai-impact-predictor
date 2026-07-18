@@ -33,6 +33,10 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     df["ai_efficiency"] = df["Skill_Retention_Score"] / (df["Weekly_GenAI_Hours"] + 1)
     df["anxiety_gpa_pressure"] = df["Anxiety_Level_During_Exams"] * (4 - df["Pre_Semester_GPA"])
 
+    # Target variable for GPA impact (re-framed to avoid target leakage)
+    if "Post_Semester_GPA" in df.columns:
+        df["gpa_change"] = df["Post_Semester_GPA"] - df["Pre_Semester_GPA"]
+
     # ── Ordinal encodings ────────────────────────────────────────────────────
     df["Year_of_Study_enc"] = df["Year_of_Study"].map(YEAR_ORDER).astype(int)
     df["Prompt_Engineering_Skill_enc"] = df["Prompt_Engineering_Skill"].map(SKILL_ORDER).astype(int)

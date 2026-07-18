@@ -19,8 +19,8 @@ REGRESSION_MODELS = {
 }
 
 CLASSIFICATION_MODELS = {
-    "logistic_regression": LogisticRegression(max_iter=1000, random_state=42),
-    "random_forest_classifier": RandomForestClassifier(n_estimators=100, random_state=42),
+    "logistic_regression": LogisticRegression(max_iter=1000, class_weight="balanced", random_state=42),
+    "random_forest_classifier": RandomForestClassifier(n_estimators=100, class_weight="balanced", random_state=42),
     "gradient_boosting_classifier": GradientBoostingClassifier(n_estimators=100, random_state=42),
 }
 

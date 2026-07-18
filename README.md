@@ -94,27 +94,24 @@ uv run jupyter nbconvert --to notebook --execute notebooks/02_feature_engineerin
 
 The final models were trained on 40,000 students and evaluated on a holdout test set of 10,000 students.
 
-### Task A: Regression (`Post_Semester_GPA`)
+### Task A: Regression (`gpa_change`)
 
 | Model | Test MAE | Test RMSE | Test R² |
 | :--- | :---: | :---: | :---: |
-| **Gradient Boosting (Tuned)** | **0.1125** | **0.1426** | **0.9157** |
-| Random Forest (Tuned) | 0.1184 | 0.1516 | 0.9048 |
-| Linear Regression | 0.1247 | 0.1586 | 0.8958 |
+| **Gradient Boosting (Tuned)** | **0.1116** | **0.1421** | **41.26%** |
 
-*   **Best Model:** Gradient Boosting Regressor, explaining **91.57%** of the variance in final GPA.
-*   **Key Insight:** Pre-Semester GPA and the engineered interaction feature `anxiety_gpa_pressure` are the strongest drivers of student performance.
+*   **Best Model:** Tuned Gradient Boosting Regressor, explaining **41.26%** of the variance in student GPA changes.
+*   **Key Insight:** GPA target re-framed as delta (`gpa_change = Post_Semester_GPA - Pre_Semester_GPA`) to prevent absolute target leakage. Top drivers of GPA change are **Traditional Study Hours** and **Primary GenAI Use Case**.
 
 ### Task B: Classification (`Burnout_Risk_Level`)
 
-| Model | Test Accuracy | Test Weighted F1 |
-| :--- | :---: | :---: |
-| **Logistic Regression (Tuned)** | **53.86%** | **53.86%** |
-| Gradient Boosting (Tuned) | 53.62% | 53.66% |
-| Random Forest (Tuned) | 53.38% | 53.36% |
+| Configuration (High Burnout Class) | Precision (High) | Recall (High) | F1-Score (High) |
+| :--- | :---: | :---: | :---: |
+| **Optimized Decision Threshold (0.30)** | **0.57** | **0.60** | **0.59** |
+| Baseline (Unbalanced Random Forest) | 0.66 | 0.46 | 0.55 |
 
-*   **Best Model:** Logistic Regression (lightweight and interpretable) and Gradient Boosting achieve comparable results, ~53.9% F1-score.
-*   **Key Insight:** Initially a weak-signal problem (Mutual Information < 0.004), feature engineering (specifically `study_ratio` and `genai_dependency_score`) was critical, lifting classification weighted F1-score from a near-dummy baseline of **~25%** to **~54%**.
+*   **Best Model:** Random Forest Classifier using balanced class weights and a decision threshold optimized at 0.30 for the High class (F1-score for High class = **58.72%**).
+*   **Key Insight:** Optimizing decision threshold improved minority recall from **46%** to **60.1%**, identifying significantly more high-risk students early. Primary risk factors are **Weekly GenAI Hours** and **Perceived AI Dependency**.
 
 For detailed visualization outputs, diagnostic curves (Residuals, Confusion Matrices, ROC Curves), and key findings, please refer to the fully executed evaluation notebook: [04_evaluation.ipynb](file:///home/haru/Data_Science/Project/student-ai-impact-predictor/notebooks/04_evaluation.ipynb).
 

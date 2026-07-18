@@ -163,13 +163,22 @@ if st.sidebar.button("🔮 Predict Student Outcomes", type="primary"):
     with st.spinner("Engineering features and running models..."):
         engineered_df = engineer_features(input_df)
         
-        # Predict GPA & Burnout
-        pred_gpa = reg_model.predict(engineered_df)[0]
-        pred_burnout = clf_model.predict(engineered_df)[0]
+        # Predict GPA change & Burnout using optimal threshold
+        pred_gpa_change = reg_model.predict(engineered_df)[0]
+        pred_gpa = min(max(pre_semester_gpa + pred_gpa_change, 0.0), 4.0)
         
         classes = clf_model.classes_
         probs = clf_model.predict_proba(engineered_df)[0]
         prob_dict = dict(zip(classes, probs))
+        
+        # Use optimal threshold of 0.30 for "High" Burnout class from tuning
+        high_idx = list(classes).index("High")
+        if probs[high_idx] >= 0.30:
+            pred_burnout = "High"
+        else:
+            other_indices = [i for i in range(len(classes)) if i != high_idx]
+            max_idx = other_indices[np.argmax(probs[other_indices])]
+            pred_burnout = classes[max_idx]
         
     st.session_state["predicted"] = True
     st.session_state["pred_gpa"] = pred_gpa

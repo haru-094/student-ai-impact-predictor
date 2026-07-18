@@ -41,8 +41,15 @@ def run(task: str = "regression", tune: bool = False) -> None:
     plot_target_distribution(df[target], cfg)
     plot_correlation_heatmap(df, cfg)
 
-    # 4. Split
-    X_train, X_test, y_train, y_test = split(df, target, cfg)
+    # 4. Split (dropping target outcome leakage columns)
+    cols_to_drop = []
+    if task == "regression":
+        cols_to_drop = ["Post_Semester_GPA", "Burnout_Risk_Level"]
+    else:
+        cols_to_drop = ["Post_Semester_GPA", "gpa_change"]
+        
+    df_clean = df.drop(columns=[c for c in cols_to_drop if c in df.columns], errors="ignore")
+    X_train, X_test, y_train, y_test = split(df_clean, target, cfg)
 
     # 5. Train
     fitted = train_all(X_train, y_train, cfg, task=task, tune=tune)

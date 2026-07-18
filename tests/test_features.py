@@ -51,6 +51,17 @@ class TestFeatures(unittest.TestCase):
         self.assertEqual(engineered_df.loc[0, "Year_of_Study_enc"], 1)
         self.assertEqual(engineered_df.loc[1, "Year_of_Study_enc"], 4)
 
+        # Verify gpa_change is not created if Post_Semester_GPA is absent
+        self.assertNotIn("gpa_change", engineered_df.columns)
+
+        # Verify gpa_change is correctly calculated if Post_Semester_GPA is present
+        df_target = self.df.copy()
+        df_target["Post_Semester_GPA"] = [3.5, 3.7]
+        engineered_target = engineer_features(df_target)
+        self.assertIn("gpa_change", engineered_target.columns)
+        self.assertAlmostEqual(engineered_target.loc[0, "gpa_change"], 0.3)
+        self.assertAlmostEqual(engineered_target.loc[1, "gpa_change"], -0.1)
+
     def test_build_preprocessor(self):
         preprocessor = build_preprocessor(self.cfg)
         self.assertIsInstance(preprocessor, ColumnTransformer)
