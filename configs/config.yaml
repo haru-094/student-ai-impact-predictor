@@ -66,6 +66,9 @@ features:
     - genai_dependency_score
     - ai_efficiency
     - anxiety_gpa_pressure
+    - genai_proportion       # new: AI fraction of total study time
+    - anxiety_workload       # new: anxiety × total workload (compound stress)
+    - ai_tool_intensity      # new: GenAI hours × tool diversity (breadth×depth)
   ordinal:
     - Year_of_Study_enc
     - Prompt_Engineering_Skill_enc

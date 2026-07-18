@@ -17,6 +17,7 @@ class TestFeatures(unittest.TestCase):
         self.df = pd.DataFrame({
             "Traditional_Study_Hours": [10.0, 15.0],
             "Weekly_GenAI_Hours": [5.0, 0.0],
+            "Tool_Diversity": [3, 1],
             "Perceived_AI_Dependency": [3, 1],
             "Skill_Retention_Score": [80.0, 90.0],
             "Anxiety_Level_During_Exams": [4, 2],
@@ -37,6 +38,9 @@ class TestFeatures(unittest.TestCase):
         self.assertIn("genai_dependency_score", engineered_df.columns)
         self.assertIn("ai_efficiency", engineered_df.columns)
         self.assertIn("anxiety_gpa_pressure", engineered_df.columns)
+        self.assertIn("genai_proportion", engineered_df.columns)
+        self.assertIn("anxiety_workload", engineered_df.columns)
+        self.assertIn("ai_tool_intensity", engineered_df.columns)
         
         # Verify ordinal encoding columns are created
         self.assertIn("Year_of_Study_enc", engineered_df.columns)

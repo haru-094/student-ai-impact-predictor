@@ -1,39 +1,52 @@
 {
-  "best_regression_model": "gradient_boosting_regressor",
-  "best_regression_metrics": {
-    "Model": "gradient_boosting_regressor",
-    "Test MAE": 0.11269353611079132,
-    "Test RMSE": 0.143056350348457,
-    "Test R\u00b2": 0.9152181815522715
+  "corrected": true,
+  "leakage_resolved": true,
+  "final_regression_model": "GradientBoostingRegressor (corrected, no leakage)",
+  "final_regression_target": "gpa_change (Post_Semester_GPA - Pre_Semester_GPA)",
+  "final_regression_metrics": {
+    "Test_R2": 0.4127,
+    "Test_MAE": 0.1116,
+    "Test_RMSE": 0.1421,
+    "note": "Honest corrected metrics; original R\u00b2=0.91 was due to Pre_Semester_GPA leakage"
   },
-  "best_classification_model": "logistic_regression",
-  "best_classification_metrics": {
-    "Model": "logistic_regression",
-    "Test Accuracy": 0.5383,
-    "Test F1": 0.5382535070919697
+  "final_classification_model": "LogisticRegression (3-class, class_weight=balanced)",
+  "final_classification_target": "Burnout_Risk_Level (Low/Medium/High)",
+  "final_classification_metrics": {
+    "Test_Accuracy": 0.4879,
+    "High_class_Precision": 0.4722,
+    "High_class_Recall": 0.7342,
+    "High_class_F1": 0.5748,
+    "High_class_threshold": 0.3,
+    "note": "Honest F1=0.597; 2-class reframe rejected (baseline F1=0.805 > model F1=0.792)"
+  },
+  "triage_ranking": {
+    "source": "P(High) from 3-class LogReg predict_proba()",
+    "verdict": "comparable",
+    "mean_gap_High_vs_Medium": 0.1978,
+    "mannwhitney_pvalue": 1.7693183735306167e-176
   },
   "feature_columns": [
-    "Major_Category",
-    "Year_of_Study",
     "Pre_Semester_GPA",
     "Weekly_GenAI_Hours",
-    "Primary_Use_Case",
-    "Prompt_Engineering_Skill",
     "Tool_Diversity",
-    "Paid_Subscription",
     "Traditional_Study_Hours",
     "Perceived_AI_Dependency",
-    "Institutional_Policy",
     "Anxiety_Level_During_Exams",
     "Skill_Retention_Score",
-    "Burnout_Risk_Level",
     "study_ratio",
     "total_study_hours",
     "genai_dependency_score",
     "ai_efficiency",
     "anxiety_gpa_pressure",
+    "genai_proportion",
+    "anxiety_workload",
+    "ai_tool_intensity",
     "Year_of_Study_enc",
     "Prompt_Engineering_Skill_enc",
-    "Primary_Use_Case_enc"
-  ]
+    "Primary_Use_Case_enc",
+    "Major_Category",
+    "Institutional_Policy",
+    "Paid_Subscription"
+  ],
+  "random_state": 42
 }

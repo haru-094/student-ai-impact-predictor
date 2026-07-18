@@ -38,6 +38,7 @@ Data/processed/*.feather
 # keep directory markers
 !Data/raw/.gitkeep
 !Data/processed/.gitkeep
+archive/
 
 # ── Trained model artifacts ───────────────────
 models/saved/**/*.pkl
@@ -84,7 +85,7 @@ Desktop.ini
 .pydevproject
 .spyderproject
 .spyproject
-
+.streamlit/secrets.toml
 # ── Temporary / misc ─────────────────────────
 tmp/
 temp/

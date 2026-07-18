@@ -33,6 +33,14 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     df["ai_efficiency"] = df["Skill_Retention_Score"] / (df["Weekly_GenAI_Hours"] + 1)
     df["anxiety_gpa_pressure"] = df["Anxiety_Level_During_Exams"] * (4 - df["Pre_Semester_GPA"])
 
+    # ── New safe interaction features (pre-semester only, Task 2) ─────────────
+    # Fraction of all study time spent on AI (0 → all traditional, 1 → all AI)
+    df["genai_proportion"] = df["Weekly_GenAI_Hours"] / (df["total_study_hours"] + 1)
+    # Anxiety amplified by total workload — compound stress signal
+    df["anxiety_workload"] = df["Anxiety_Level_During_Exams"] * df["total_study_hours"]
+    # Breadth × depth of AI usage — heavy multi-tool users
+    df["ai_tool_intensity"] = df["Weekly_GenAI_Hours"] * df["Tool_Diversity"]
+
     # Target variable for GPA impact (re-framed to avoid target leakage)
     if "Post_Semester_GPA" in df.columns:
         df["gpa_change"] = df["Post_Semester_GPA"] - df["Pre_Semester_GPA"]

@@ -1,1 +1,4 @@
-{"optimal_high_burnout_threshold": 0.30000000000000004}
+{
+  "optimal_high_burnout_threshold": 0.3,
+  "model": "LogisticRegression_3class_balanced"
+}
